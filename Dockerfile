@@ -1,10 +1,6 @@
-FROM python:3.11
+FROM python:3.11-slim
 
-WORKDIR /app
-
-RUN git clone https://github.com/Den-Ter/Kvest_bot_in_PTZ.git /app
-
-COPY requirements.txt .
+COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
