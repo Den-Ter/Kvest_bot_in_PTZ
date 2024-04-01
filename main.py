@@ -124,6 +124,7 @@ import pickle
 import os.path
 
 import logging
+from logging.handlers import RotatingFileHandler
 
 import random
 
@@ -131,12 +132,18 @@ import random
 bot = telebot.TeleBot('6535191442:AAEI6xYilhMj0iTaR4CzJJ9VWyL5woxghlU') # Основной
 
 
+
 logger2 = logging.getLogger(__name__)
 logger2.setLevel(logging.INFO)
 
 # настройка обработчика и форматировщика для logger2
-handler2 = logging.FileHandler(f"{__name__}.log", mode='a')
+#handler2 = logging.FileHandler(f"{__name__}.log", mode='a')
+
+handler2 = RotatingFileHandler(f"{__name__}.log", maxBytes=20480, backupCount=3, mode='a')
+
 formatter2 = logging.Formatter("%(name)s %(asctime)s %(levelname)s %(message)s")
+
+
 
 # добавление форматировщика к обработчику
 handler2.setFormatter(formatter2)
