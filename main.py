@@ -1,16 +1,3 @@
-import telebot
-from telebot import types
-import pickle
-import os.path
-
-
-import random
-
-
-
-bot = telebot.TeleBot('6535191442:AAEI6xYilhMj0iTaR4CzJJ9VWyL5woxghlU')
-
-
 DB_KVEST = {"Мемориальные доски на Октябрском - Сложный":
 [{"🎓 В нашем городе есть гимназия, которая носит имя великого человека. 🎖 Он был не просто участником Великой Отечественной войны, но и директором этой самой гимназии! 🌟 И знаете что? В честь этого человека даже установлена мемориальная доска! 💥\n\nВы готовы узнать, где она находится? 🔎 Давайте разберемся вместе! 🧐💭": [61.793995, 34.370359, 3]},
 {"🌟 Основатель офтальмологической помощи в Карелии, 💉 доктор медицины и Герой труда! 🏅 В его честь была установлена памятная доска! 🏆\n\nХотите узнать, где она расположена? 🤔 \nВместе раскроем все тайны! 👀": [61.796486, 34.372404, 3]},
@@ -64,26 +51,15 @@ DB_KVEST = {"Мемориальные доски на Октябрском - С�
  {"Над могилой, в тихом парке\nРасцвели тюльпаны ярко.\nВечно тут огонь горит,\nТут солдат советский спит.\nМы склонились низко-низко\nУ подножья обелиска,\nНаш венок расцвёл на нём\nЖарким, пламенным огнём.\nМир солдаты защищали,\nЖизнь за нас они отдали.\nСохраним в сердцах своих\nПамять светлую о них!\nКак продолжение жизни солдат\nПод звёздами мирной державы\nЦветы на ратных могилах горят\nВенками немеркнущей славы.": [61.787111, 34.366519, 1]},
  {"Про кого написана эта часть биографии? Найдите доску.\n«Значительное влияние на его творчество оказала долгая поездка, предпринятая им по Карелии, что отражено в некоторых его произведениях. Тогда он был Олонецким губернатором, и в целях инспекции проехал на лошадях и лодках более 2000 километров по этому живописному краю.»": [61.787933, 34.367001, 1]},
  {"«Не муж и жена, а четыре разных человека»": [61.788362, 34.379424, 1]},
- {"«Русская народная сказительница, милая старушка из 19 века выступала в гимназии 6 марта 1896 года. Там о ней память по сей день и хранится»": [61.788036, 34.383465, 1]}],
+ {"«Русская народная сказительница, милая старушка из 19 века выступала в гимназии 6 марта 1896 года. Там о ней память по сей день и хранится»": [61.788036, 34.383465, 1]}]
 
-
-"Test":
-[{"1": [61.78093, 34.34093, 1]}]
 }
 
 
 
-mas=[]
-for key in DB_KVEST:
-    mas.append(key)
-
-db_consumer = {}
-
-if os.path.exists('db_consumer.pickle'):
-    with open('db_consumer.pickle', 'rb') as f:
-        db_consumer = pickle.load(f)
-
-
+# ============================================================================= В случае, если я этого не сделал (наверное было лень) оставлю помощь.
+# =============================================================================     вы просто так не добавите новые фразы :)
+# ============================================================================= нужно внести изменения в random_message_continue и random_message_end
 
 mas_command_not_found = ["Ой, извините, но моя сенсорная панель сегодня утром решила взять выходной. \nПрости, что не смог распознать твое сообщение! 🤖🙇‍♂️",
                          "Бип-буп... Ошибка! Похоже, я все еще учусь читать мысли. Но я обещаю, что скоро разберусь, что ты написал! 🤔📖",
@@ -108,6 +84,28 @@ mas_quest_comleted = ["🎉 Поздравляю с успешным прохо�
                     " 🎉 Вы закончили Квест по нестандартному сценарию, и теперь мы должны предложить вам роль в Голливуде! 🎥🌟",
                     "🎉 Официально объявляем вас Королевой/Королем Квестов! \nОчень жаль, что корона у нас закончилась, но вы заслуживаете все почести и уважение! 👑💖"]
 
+mas_quest_comleted_fifty_percentages = ["😭 Пропустить вопросы — это не конец, попробуйте снова и у вас получится! \nКвест пройден, но мы не сдаемся!",
+                                     "⏰ Не забывайте следить за временем и не пропускать вопросы! \nЗадание выполнено, идём дальше!",
+                                     "💡 Используйте знания и умения, чтобы ответить и достичь успеха! \nПуть пройден, новые горизонты впереди!",
+                                     "💪🏻 Не сдаёмся и стараемся лучше! \nПрепятствие преодолено, впереди новые испытания!",
+                                     "🌐 Не унываем, всегда есть шанс начать всё сначала! \nТочка поставлена, начинается новая глава!",
+                                     "🥇 Не сдавайтесь, стремитесь к лучшему! \nЦель достигнута, ставим новые цели!",
+                                     "🌈 Не бойтесь ошибок, учитесь на них! \nМост пройден, дальше интереснее!",
+                                     "📚 Анализируем ошибки, становимся лучше! \nЭтап завершен, впереди новый!",
+                                     "💪 Вершины покоряются, новые вершины ждут! \nВершина покорена, впереди новые вершины!",
+                                     "💡 Не забываем анализировать ошибки! \nТуннель пройден, видим свет в конце!"]
+
+mas_quest_comleted_twenty_five_percentages = ["Не идеально, но вполне неплохо! \n🎯 Квест завершен, продолжаем стремиться к большему 🚀 и никогда не сдаемся! 👊!",
+                                     "Квест окончен, но есть над чем работать 🔧. \nНе останавливаемся на достигнутом и идем к новым высотам! 🌟",
+                                     "Прошли квест, хоть и с пропусками 💨. \nТак держать! 👏, но всегда есть путь к совершенству, поэтому не забываем пробовать снова и снова! 🌟",
+                                     "💪Квест завершен! Пусть не идеальный результат, но все равно достойный. \nСтремись к лучшему, и не сдавайся! 🍀💫🔃",
+                                     "Квест закрыт! Результат не максимальный, но это не повод останавливаться. \nПродолжай идти вперед! 🏃‍♀️🏃‍♂️🔁",
+                                     "Квест пройден, пусть и не на максимальное количество очков! \nПродолжай стараться и не бойся браться за новые испытания. 🎮🏅",
+                                     "Этот квест окончен, но твой путь к успеху продолжается! \nНе стой на месте и попробуй свои силы в другом задании. 🏃‍♀️🎠",
+                                     "Задание выполнено, хоть и есть к чему стремиться. Не бойся браться за новое и у тебя все получится! 🌠✨",
+                                     "Этот квест завершен, но всегда можно пройти другой и добиться лучшего результата! 🕹️💪",
+                                     "Квест закрыт, но есть куда расти! \nНе сдавайся, и пройди его снова, или попробуй другой! 🔄"]
+
 mas_continue_question = ["Ах, оказывается, у вас пропанковское настроение - \"пропускай и несдавайся\"! Но не волнуйтесь, я уверен, что следующие вопросы станут вашими проверками на героизм! 💪✨",
                          "О, о, о! Бунтарь-пропускник пролетел мимо вопроса! Но поверьте мне, наш квест еще полон невероятных предприятий и загадок, так что держите нос спереди и идите вперед с непревзойденным энтузиазмом! 🕵️‍♂️🚀",
                          "Ой-ой-ой! Вы стали непослушным пропускником, словно изгой среди квестовых ребят! Но не беспокойтесь, вся эпичность и приключения только начинаются, и я знаю, что вы примете вызов жизни с чистой совестью! 👑🌟",
@@ -120,17 +118,63 @@ mas_continue_question = ["Ах, оказывается, у вас пропанк
                          "Эй, пропускник-экстравагант! Вопрос скользнул мимо вас, но не позволяйте этому заставить вас сдаваться! Давайте продолжим этот квестовый танец и оставим следующие вопросы без промаха! 💃🎯"]
 
 
+import telebot
+from telebot import types
+import pickle
+import os.path
+
+import logging
+
+import random
+
+
+bot = telebot.TeleBot('6535191442:AAEI6xYilhMj0iTaR4CzJJ9VWyL5woxghlU') # Основной
+
+
+logger2 = logging.getLogger(__name__)
+logger2.setLevel(logging.INFO)
+
+# настройка обработчика и форматировщика для logger2
+handler2 = logging.FileHandler(f"{__name__}.log", mode='a')
+formatter2 = logging.Formatter("%(name)s %(asctime)s %(levelname)s %(message)s")
+
+# добавление форматировщика к обработчику
+handler2.setFormatter(formatter2)
+# добавление обработчика к логгеру
+logger2.addHandler(handler2)
+
+logger2.info(f"Errors and logger information from the file {__name__}...")
+
+
+mas=[]
+for key in DB_KVEST:
+    mas.append(key)
+
+db_consumer = {}
+db_message = {}
+
+if os.path.exists('db_consumer.pickle'):
+    with open('db_consumer.pickle', 'rb') as f:
+        db_consumer = pickle.load(f)
+
+
 @bot.message_handler(commands=['start'])
 def start(message):
     userID = message.from_user.id
     if userID not in db_consumer:
         db_consumer[userID] = {"Menu": 0, "Stage": 0, "Point": 0, "Flag": 1, "Kvest": ""}
 
+    if userID not in db_message:
+            db_message[userID] = {"Skip": 0, "Random_continue": 0, "Random_end": 0}
+
+
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     btn1 = types.KeyboardButton("Начать квест")
     markup.add(btn1)
     mess = f'Привет, {message.from_user.first_name}! Добро пожаловать на прохождение квестов.'
     bot.send_message(message.chat.id, mess, parse_mode='html', reply_markup=markup)
+
+    logger2.info(f"Creating a new user.")
 
 
 
@@ -148,9 +192,16 @@ def func(message):
             markup.add(button1, button2, button3, button4)
             mess = f'Выберите квест'
             bot.send_message(message.chat.id, mess, parse_mode='html', reply_markup=markup)
+
+            logger2.info(f"Start completing the quest.")
+
         except Exception as e:
             db_consumer[userID] = {"Menu": 0, "Stage": 0, "Point": 0, "Flag": 1, "Kvest": ""}
-            print(e)
+            db_message[userID] = {"Skip": 0, "Random_continue": 0, "Random_end": 0}
+
+            logger2.warning("The problem with creating databases")
+
+
 
     elif message.text == ">":
         try:
@@ -168,12 +219,18 @@ def func(message):
             mess = f'Вот ещё квесты для вас'
             bot.send_message(message.chat.id, mess, parse_mode='html', reply_markup=markup)
 
+            logger2.info(f"Choosing the next quest")
+
         except Exception as e:
             db_consumer[userID] = {"Menu": 0, "Stage": 0, "Point": 0, "Flag": 1, "Kvest": ""}
-            print(e)
+            db_message[userID] = {"Skip": 0, "Random_continue": 0, "Random_end": 0}
+
+            logger2.warning("The problem with creating databases")
+
 
     elif message.text == "<":
         try:
+
             bot.delete_message(message.chat.id, message.message_id)
 
             db_consumer[userID]['Menu'] -= 1
@@ -189,23 +246,63 @@ def func(message):
             mess = f'Вот ещё квесты для вас'
             bot.send_message(message.chat.id, mess, parse_mode='html', reply_markup=markup)
 
+            logger2.info(f"Choosing the previous quest")
+
         except Exception as e:
             db_consumer[userID] = {"Menu": 0, "Stage": 0, "Point": 0, "Flag": 1, "Kvest": ""}
+            db_message[userID] = {"Skip": 0, "Random_continue": 0, "Random_end": 0}
+
+            logger2.warning("The problem with creating databases")
 
 #================================================================================================================
     elif message.text == "Пропустить вопрос":
         try:
-            db_consumer[userID]["Stage"] += 1
+            logger2.info(f"Skipping a question")
 
-            bot.send_message(message.chat.id, mas_continue_question[random.randint(0, 9)])
+            db_consumer[userID]["Stage"] += 1
+            db_message[userID]["Skip"] += 1 # Смотрим, кто любит пропускать вопросики
+
+
+            random_message_continue = random.randint(0, 9)
+
+            #============================================ Обработка рандома, чтобы не попадался подряд (как минимум 1 раз) ============================================
+            if(random_message_continue == db_message[userID]["Random_continue"]):
+                random_message_continue += 1
+                if(random_message_continue > 9):
+                    random_message_continue = 0
+                db_message[userID]["Random_continue"] = random_message_continue
+            # ============================================ Обработка рандома, чтобы не попадался подряд (как минимум 1 раз) ============================================
+
+            bot.send_message(message.chat.id, mas_continue_question[random_message_continue])
+
 
             if (db_consumer[userID]["Stage"] < len(DB_KVEST[db_consumer[userID]["Kvest"]])):
+                logger2.info(f"Next question")
+
                 mess = DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]].keys()
                 bot.send_message(message.chat.id, mess, parse_mode='html')
             else:
-                bot.send_message(message.chat.id, mas_quest_comleted[random.randint(0, 9)])
+                logger2.info(f"Completing the quest in the missing riddles")
+
+                random_message_end = random.randint(0, 9)
+
+                # ============================================ Обработка рандома, чтобы не попадался подряд (как минимум 1 раз) ============================================
+                if (random_message_end == db_message[userID]["Random_end"]):
+                    random_message_end += 1
+                    if (random_message_end > 9):
+                        random_message_end = 0
+                    db_message[userID]["Random_end"] = random_message_end
+                # ============================================ Обработка рандома, чтобы не попадался подряд (как минимум 1 раз) ============================================
+
+                if(db_message[userID]["Skip"] > round(db_consumer[userID]["Stage"] / 2)):  # Если пропущено больше 50% квеста
+                    bot.send_message(message.chat.id, mas_quest_comleted_fifty_percentages[random_message_end])
+                elif(db_message[userID]["Skip"] > round(db_consumer[userID]["Stage"] / 4)): # Если пропущено больше 25% квеста
+                    bot.send_message(message.chat.id, mas_quest_comleted_twenty_five_percentages[random_message_end])
+                else:                                                                         # Если квест пройден на 100%
+                    bot.send_message(message.chat.id, mas_quest_comleted[random_message_end])
 
                 db_consumer[userID]["Stage"] = 0
+                db_message[userID]["Skip"] = 0
 
                 markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
                 button1 = types.KeyboardButton('<')
@@ -222,10 +319,16 @@ def func(message):
 
         except Exception as e:
             db_consumer[userID] = {"Menu": 0, "Stage": 0, "Point": 0, "Flag": 1, "Kvest": ""}
-            print(e)
+            db_message[userID] = {"Skip": 0, "Random_continue": 0, "Random_end": 0}
+
+            logger2.warning("The problem with creating databases")
+            logger2.exception("Error in congratulating the user for missing riddles")
+
 
     elif message.text == "⭐ Баллы ⭐":
         try:
+            logger2.info(f"The output of information on the user's points")
+
             if db_consumer[userID]["Point"] % 10 == 1 and db_consumer[userID]["Point"] != 11:
                 bot.send_message(message.chat.id, "У вас на данный момент есть *" + str(db_consumer[userID]["Point"]) + "* балл", parse_mode= "Markdown")
             elif db_consumer[userID]["Point"] % 10 >= 2 and db_consumer[userID]["Point"] % 10 <= 4 and db_consumer[userID]["Point"] != 12 and db_consumer[userID]["Point"] != 12 and db_consumer[userID]["Point"] != 14:
@@ -242,7 +345,8 @@ def func(message):
 
         except Exception as e:
             db_consumer[userID] = {"Menu": 0, "Stage": 0, "Point": 0, "Flag": 1, "Kvest": ""}
-            print(e)
+            db_message[userID] = {"Skip": 0, "Random_continue": 0, "Random_end": 0}
+            logger2.warning("The problem with creating databases")
 
 # ================================================================================================================
     else:
@@ -278,38 +382,67 @@ def handle_location(message):
 
     if(abs(latitude - DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]][list(DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]].keys())[0]][0]) < 0.0003 and
       abs(longitude - DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]][list(DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]].keys())[0]][1]) < 0.0003):
+        logger2.info(f"The location coincided with the place")
 
         db_consumer[userID]["Point"] += DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]][
             list(DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]].keys())[0]][2]
         db_consumer[userID]["Stage"] += 1
 
+        try:
+            if (db_consumer[userID]["Stage"] < len(DB_KVEST[db_consumer[userID]["Kvest"]])):
+                logger2.info(f"Next question")
 
-        if (db_consumer[userID]["Stage"] < len(DB_KVEST[db_consumer[userID]["Kvest"]])):
-            mess = DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]].keys()
-            bot.send_message(message.chat.id, mess, parse_mode='html')
-        else:
-            bot.send_message(message.chat.id, mas_quest_comleted[random.randint(0, 9)])
+                mess = DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]].keys()
+                bot.send_message(message.chat.id, mess, parse_mode='html')
+            else:
+                logger2.info(f"Completing the quest at the right point")
 
-            db_consumer[userID]["Stage"] = 0
+                random_message_end = random.randint(0, 9)
 
-            markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-            button1 = types.KeyboardButton('<')
-            button2 = types.KeyboardButton('⭐ Баллы ⭐')
-            button3 = types.KeyboardButton('>')
-            button4 = types.KeyboardButton(mas[0])
+                # ============================================ Обработка рандома, чтобы не попадался подряд (как минимум 1 раз) ============================================
+                if (random_message_end == db_message[userID]["Random_end"]):
+                    random_message_end += 1
+                    if (random_message_end > 9):
+                        random_message_end = 0
+                    db_message[userID]["Random_end"] = random_message_end
+                # ============================================ Обработка рандома, чтобы не попадался подряд (как минимум 1 раз) ============================================
 
-            markup.add(button1, button2, button3, button4)
-            mess = f'Выберите квест'
-            bot.send_message(message.chat.id, mess, parse_mode='html', reply_markup=markup)
+                if (db_message[userID]["Skip"] > round(
+                        db_consumer[userID]["Stage"] / 2)):  # Если пропущено больше 50% квеста
+                    bot.send_message(message.chat.id, mas_quest_comleted_fifty_percentages[random_message_end])
+                elif (db_message[userID]["Skip"] > round(
+                        db_consumer[userID]["Stage"] / 4)):  # Если пропущено больше 25% квеста
+                    bot.send_message(message.chat.id, mas_quest_comleted_twenty_five_percentages[random_message_end])
+                else:  # Если квест пройден на 100%
+                    bot.send_message(message.chat.id, mas_quest_comleted[random_message_end])
 
-            # ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==
-            with open('db_consumer.pickle', 'wb') as f:
-                pickle.dump(db_consumer, f)
+                db_consumer[userID]["Stage"] = 0
+                db_message[userID]["Skip"] = 0
+
+                markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+                button1 = types.KeyboardButton('<')
+                button2 = types.KeyboardButton('⭐ Баллы ⭐')
+                button3 = types.KeyboardButton('>')
+                button4 = types.KeyboardButton(mas[0])
+
+                markup.add(button1, button2, button3, button4)
+                mess = f'Выберите квест'
+                bot.send_message(message.chat.id, mess, parse_mode='html', reply_markup=markup)
+                # ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==
+                with open('db_consumer.pickle', 'wb') as f:
+                    pickle.dump(db_consumer, f)
+        except Exception as e:
+            logger2.exception("Mistakes in congratulations without skipping a question")
+
 
     elif(abs(latitude - DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]][list(DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]].keys())[0]][0]) < 0.003 and
         abs(longitude - DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]][list(DB_KVEST[db_consumer[userID]["Kvest"]][db_consumer[userID]["Stage"]].keys())[0]][1]) < 0.003):
+        logger2.info(f"The user's location is close to the desired point")
+
         bot.send_message(message.chat.id, "️Вы где-то недалеко!🕵️‍♂️")
     else:
+        logger2.info(f"The user's location is far from the specified point")
+
         bot.send_message(message.chat.id, "Вы где-то не там!⚠️")
 
 bot.polling(none_stop=True)
